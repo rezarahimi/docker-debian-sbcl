@@ -10,7 +10,7 @@ ENV SBCL_VERSION_BUILD 16
 ENV GIT_TAG sbcl-${SBCL_VERSION_MAJOR}.${SBCL_VERSION_MINOR}.${SBCL_VERSION_BUILD}
 
 # Download and make SBCL
-RUN apt-get update && apt-get install -y curl git coreutils make gcc build-essential sbcl time zlib1g-dev emacs texlive texinfo &&\
+RUN apt-get update && apt-get install -y curl git coreutils make gcc build-essential sbcl time zlib1g-dev texlive texinfo &&\
     git clone git://git.code.sf.net/p/sbcl/sbcl && \
     cd /sbcl && \ 
     git checkout -b ${GIT_TAG} tags/${GIT_TAG} && \
@@ -20,8 +20,8 @@ RUN apt-get update && apt-get install -y curl git coreutils make gcc build-essen
     cd /sbcl && \
     sh install.sh && \
     rm -rf /sbcl && \
-    curl -o 'quicklisp.lisp' "https://beta.quicklisp.org/quicklisp.lisp" && \
-    curl -o 'quicklisp.lisp.asc' "https://beta.quicklisp.org/quicklisp.lisp.asc" && \
+    wget -O quicklisp.lisp "https://beta.quicklisp.org/quicklisp.lisp" && \
+    wget -O quicklisp.lisp.asc "https://beta.quicklisp.org/quicklisp.lisp.asc" && \
     #gpg --verify quicklisp.lisp.asc quicklisp.lisp && \
     sbcl --load quicklisp.lisp \
        --eval '(quicklisp-quickstart:install)'       \
