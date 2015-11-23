@@ -19,6 +19,13 @@ RUN apt-get update && apt-get install -y curl git coreutils make gcc build-essen
     make && \
     cd /sbcl && \
     sh install.sh && \
-    rm -rf /sbcl
+    rm -rf /sbcl && \
+    curl -o 'quicklisp.lisp' "https://beta.quicklisp.org/quicklisp.lisp" && \
+    curl -o 'quicklisp.lisp.asc' "https://beta.quicklisp.org/quicklisp.lisp.asc" && \
+    #gpg --verify quicklisp.lisp.asc quicklisp.lisp && \
+    sbcl --load quicklisp.lisp \
+       --eval '(quicklisp-quickstart:install)'       \
+       --eval '(ql:add-to-init-file)'                \
+       --eval '(quit)'
 
 CMD [ "/bin/bash" ]
