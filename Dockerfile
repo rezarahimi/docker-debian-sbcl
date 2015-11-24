@@ -20,10 +20,10 @@ RUN apt-get update && apt-get install -y curl git coreutils make gcc build-essen
     cd /sbcl && \
     sh install.sh && \
     rm -rf /sbcl && \
-    wget -O quicklisp.lisp "https://beta.quicklisp.org/quicklisp.lisp" && \
-    wget -O quicklisp.lisp.asc "https://beta.quicklisp.org/quicklisp.lisp.asc" && \
-    #gpg --verify quicklisp.lisp.asc quicklisp.lisp && \
-    sbcl --load quicklisp.lisp \
+    wget -O /tmp/quicklisp.lisp "https://beta.quicklisp.org/quicklisp.lisp" && \
+    wget -O /tmp/quicklisp.lisp.asc "https://beta.quicklisp.org/quicklisp.lisp.asc" && \
+    #gpg --verify /tmp/quicklisp.lisp.asc /tmp/quicklisp.lisp && \
+    sbcl --load /tmp/quicklisp.lisp \
        --eval '(quicklisp-quickstart:install)'       \
        --eval '(ql:add-to-init-file)'                \
        --eval '(quit)'
